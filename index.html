@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Happy Birthday Beverley 🎀</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(135deg, #ff4da6, #ff85c1, #ffc1dc);
+      color: #fff;
+      text-align: center;
+      padding: 30px;
+    }
+
+    h1 {
+      font-size: 3em;
+      margin-bottom: 5px;
+    }
+
+    p {
+      font-size: 1.1em;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.25);
+      padding: 25px;
+      border-radius: 25px;
+      max-width: 900px;
+      margin: 30px auto;
+    }
+
+    /* POLAROID SECTION */
+    .photos {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 25px;
+      margin-top: 20px;
+    }
+
+    .polaroid {
+      background: white;
+      padding: 10px 10px 25px;
+      border-radius: 8px;
+      width: 220px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+      transform: rotate(-2deg);
+    }
+
+    .polaroid:nth-child(2) {
+      transform: rotate(2deg);
+    }
+
+    .polaroid:nth-child(3) {
+      transform: rotate(-1deg);
+    }
+
+    .polaroid img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      border-radius: 5px;
+    }
+
+    .caption {
+      color: #ff4da6;
+      font-weight: bold;
+      margin-top: 8px;
+    }
+
+    /* AUDIO */
+    .music {
+      margin-top: 30px;
+    }
+
+    audio {
+      width: 100%;
+      max-width: 400px;
+      border-radius: 20px;
+    }
+
+    /* COUNTDOWN */
+    .countdown {
+      font-size: 1.4em;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+
+    footer {
+      margin-top: 40px;
+      font-size: 0.9em;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🎂 Happy Birthday Beverley 🎂</h1>
+  <p>You make the world brighter just by being you 💕</p>
+
+  <div class="card">
+    <h2>Countdown to Your Special Day 🎉</h2>
+    <div class="countdown" id="birthday"></div>
+
+    <!-- POLAROID PHOTOS -->
+    <div class="photos">
+      <div class="polaroid">
+        <img src="pic1.jpg" alt="Memory 1">
+        <div class="caption">Beautiful You 💖</div>
+      </div>
+
+      <div class="polaroid">
+        <img src="pic2.jpg" alt="Memory 2">
+        <div class="caption">Best Memories ✨</div>
+      </div>
+
+      <div class="polaroid">
+        <img src="pic3.jpg" alt="Memory 3">
+        <div class="caption">Forever Loved 🎀</div>
+      </div>
+    </div>
+
+    <!-- MUSIC -->
+    <div class="music">
+      <h3>🎵 A Song Just for You</h3>
+      <audio controls>
+        <source src="song.mp3" type="audio/mpeg">
+        Your browser does not support audio.
+      </audio>
+    </div>
+  </div>
+
+  <footer>
+    Made with love by your sister 💗
+  </footer>
+
+  <script>
+    // 🎯 CHANGE HER BIRTHDAY DATE HERE
+    const birthday = new Date("2026-02-15 00:00:00").getTime();
+
+    setInterval(() => {
+      const now = new Date().getTime();
+      const distance = birthday - now;
+
+      if (distance < 0) {
+        document.getElementById("birthday").innerHTML =
+          "🎉 HAPPY BIRTHDAY QUEEN!!! 🎉";
+        return;
+      }
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      document.getElementById("birthday").innerHTML =
+        `${days} days ${hours} hrs ${minutes} mins ${seconds} secs 💗`;
+    }, 1000);
+  </script>
+
+<canvas id="confetti"></canvas>
+
+<script>
+  const canvas = document.getElementById("confetti");
+  const ctx = canvas.getContext("2d");
+
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  const confettiPieces = [];
+  const colors = ["#ff4da6", "#ff85c1", "#ffc1dc", "#ff69b4"];
+
+  for (let i = 0; i < 200; i++) {
+    confettiPieces.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      r: Math.random() * 6 + 4,
+      d: Math.random() * 50,
+      color: colors[Math.floor(Math.random() * colors.length)],
+      tilt: Math.random() * 10 - 10
+    });
+  }
+
+  function drawConfetti() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    confettiPieces.forEach(p => {
+      ctx.beginPath();
+      ctx.fillStyle = p.color;
+      ctx.moveTo(p.x + p.tilt, p.y);
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fill();
+    });
+
+    updateConfetti();
+  }
+
+  function updateConfetti() {
+    confettiPieces.forEach(p => {
+      p.y += Math.cos(p.d) + 2;
+      p.x += Math.sin(p.d);
+      if (p.y > canvas.height) {
+        p.y = -10;
+        p.x = Math.random() * canvas.width;
+      }
+    });
+  }
+
+  setInterval(drawConfetti, 20);
+
+  window.addEventListener("resize", () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  });
+</script>
+
+<style>
+  #confetti {
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 9999;
+  }
+</style>
+</body>
+</html>
